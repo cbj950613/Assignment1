@@ -19,7 +19,7 @@ namespace Pic10b {
         ~vector();
         
         // Overloaded Operators
-        //vector& operator*(const vector<T>&, const T& c);
+        vector& operator*(const vector<T>&, const T& c);
         vector& operator+=(const vector<T>&);
         bool operator>(const vector<T>&);
         bool operator<(const vector<T>&);
@@ -195,7 +195,7 @@ void print_vector(const Pic10b::vector<T>& v) {
 
 
 /** ************************* THE DRIVER ************************ **/
-int main(){
+/*int main1(){
     using Pic10b::vector;
     using std::cout;
     
@@ -224,7 +224,7 @@ int main(){
     v2.dump_data();
     
     return 0;
-}
+}*/
 
 /**
  OUTPUT:
