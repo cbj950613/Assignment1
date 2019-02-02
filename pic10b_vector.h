@@ -1,4 +1,14 @@
+/*
+ UID 704447499
+ Name: Byung Jun Cho
+ Pic 10C
+ Professor Salazar
+ */
+
+
 #include <iostream>   // std::ostream, std::cout
+#include <assert.h>
+#include <math.h>
 
 namespace Pic10b {
     template<typename T>
@@ -19,15 +29,7 @@ namespace Pic10b {
         ~vector();
         
         // Overloaded Operators
-        vector& operator*(const vector<T>&, const T& c);
-        vector& operator+=(const vector<T>&);
-        bool operator>(const vector<T>&);
-        bool operator<(const vector<T>&);
-        bool operator>=(const vector<T>&);
-        bool operator<=(const vector<T>&);
-        bool operator==(const vector<T>&);
-        bool operator!=(const vector<T>&);
-        
+      
         // Other members [public]
         bool empty() const;
         size_t size() const;
@@ -91,7 +93,164 @@ namespace Pic10b {
         delete[] the_data;
     }
     /** ********************* Overloaded Operators ********************* **/
-
+    template<typename T>
+    Pic10b::vector<T>  operator*(const T& c, const Pic10b::vector<T>& v) {
+        //static_assert(std::is_arithmetic<T>::value, "Numeric required.");
+        Pic10b::vector<T> v1;
+        for (size_t i = 0; i < v.size(); ++i)
+            v1.push_back(c * v[i]);
+        return v1;
+    }
+    template <>
+    Pic10b::vector<std::string> operator*<std::string>(const std::string& c, const Pic10b::vector<std::string>& v) {
+        Pic10b::vector<std::string> v1;
+        for (size_t i = 0; i < v.size(); ++i)
+            v1.push_back(c + v[i]);
+        return v;
+    }
+    //template<typename T>
+    template<typename T>
+    Pic10b::vector<T> operator*(const Pic10b::vector<T>& v, const T& c) {
+        static_assert(std::is_arithmetic<T>::value, "Numeric required.");
+        Pic10b::vector<T> v1;
+        for (size_t i = 0; i < v.size(); ++i)
+            v1.push_back(v[i] * c);
+        return v1;
+    }
+    template <>
+    Pic10b::vector<std::string> operator*<std::string>(const Pic10b::vector<std::string>& v,
+                                               const std::string& c) {
+        Pic10b::vector<std::string> v1;
+        for (size_t i = 0; i < v.size(); ++i)
+            v1.push_back(v[i] + c);
+        return v;
+    }
+    template<typename T>
+    Pic10b::vector<T> operator*(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
+        static_assert(std::is_arithmetic<T>::value, "Numeric required.");
+        Pic10b::vector<T> v;
+        size_t v_size;
+        const Pic10b::vector<T> *big_vec;
+        
+        if (vec1.size() < vec2.size()) {
+            v_size = vec1.size();
+            big_vec = &vec2;
+        }
+        else {
+            v_size = vec2.size();
+            big_vec = &vec1;
+        }
+        size_t i = 0;
+        for (; i < v_size; ++i)
+            v.push_back(vec1[i] * vec2[i]);
+        for (; i < big_vec->size(); ++i)
+            v.push_back((*big_vec)[i]);
+        
+        return v;
+    }
+    // string functions
+    template<>
+    Pic10b::vector<std::string> operator*<std::string>(const Pic10b::vector<std::string>& vec1,
+                                               const Pic10b::vector<std::string>& vec2) {
+        Pic10b::vector<std::string> v;
+        size_t v_size;
+        const Pic10b::vector<std::string> *big_vec;
+        
+        if (vec1.size() < vec2.size()) {
+            v_size = vec1.size();
+            big_vec = &vec2;
+        }
+        else {
+            v_size = vec2.size();
+            big_vec = &vec1;
+        }
+        size_t i = 0;
+        for (; i < v_size; ++i)
+            v.push_back(vec1[i] + vec2[i]);
+        for (; i < big_vec->size(); ++i)
+            v.push_back((*big_vec)[i]);
+        
+        return v;
+    }
+    template<typename T>
+    Pic10b::vector<T> operator+(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
+        Pic10b::vector<T> v;
+        size_t v_size;
+        const Pic10b::vector<T> *big_vec;
+        
+        if (vec1.size() < vec2.size()) {
+            v_size = vec1.size();
+            big_vec = &vec2;
+        }
+        else {
+            v_size = vec2.size();
+            big_vec = &vec1;
+        }
+        size_t i = 0;
+        for (;i < v_size; ++i)
+            v.push_back(vec1[i] + vec2[i]);
+        for (;i < big_vec->size(); ++i)
+            v.push_back((*(big_vec))[i]);
+        
+        return v;
+    }
+    template<typename T>
+    Pic10b::vector<T> operator+(const Pic10b::vector<T>& v, const T& c) {
+        Pic10b::vector<T> v1;
+        for (size_t i = 0; i < v.size(); ++i)
+            v1.push_back(v[i] + c);
+        return v1;
+    }
+    template<typename T>
+    Pic10b::vector<T> operator+=(const Pic10b::vector<T>& v1, const Pic10b::vector<T>& v2) {
+        return v1 + v2;
+    }
+    template<typename T>
+    Pic10b::vector<T> sqrt(const Pic10b::vector<T>& vec) {
+        Pic10b::vector<T> v;
+        for (size_t i = 0; i < v.size(); ++i)
+            v.push_back(abs(vec[i]));
+        return v;
+    }
+    template<typename T>
+    bool operator==(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
+        if (vec1.size() != vec2.size()) return false;
+        for (size_t i = 0; i < vec1.size(); ++i)
+            if (vec1[i] != vec2[i]) return false;
+        return true;
+    }
+    template<typename T>
+    bool operator!=(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
+        return !(vec1 == vec2);
+    }
+    template<typename T>
+    bool operator<(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
+        if (vec1.size() != vec2.size()) return false;
+        for (size_t i = 0; i < vec1.size(); ++i)
+            if (vec1[i] >= vec2[i]) return false;
+        return true;
+    }
+    template<typename T>
+    bool operator<=(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
+        if (vec1.size() != vec2.size()) return false;
+        for (size_t i = 0; i < vec1.size(); ++i)
+            if (vec1[i] > vec2[i]) return false;
+        return true;
+    }
+    template<typename T>
+    bool operator>(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
+        if (vec1.size() != vec2.size()) return false;
+        for (size_t i = 0; i < vec1.size(); ++i)
+            if (vec1[i] <= vec2[i]) return false;
+        return true;
+    }
+    template<typename T>
+    bool operator>=(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
+        if (vec1.size() != vec2.size()) return false;
+        for (size_t i = 0; i < vec1.size(); ++i)
+            if (vec1[i] < vec2[i]) return false;
+        return true;
+    }
     
     /** ********************* OTHER MEMBERS ********************* **/
     template<typename T>
