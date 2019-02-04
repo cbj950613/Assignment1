@@ -58,6 +58,7 @@ namespace Pic10b {
     : the_data(nullptr), the_size(0), the_capacity(INIT_CAP) {
         
         the_data = new T[the_capacity];
+        cout << "xxxxx: This is the default constructor :xxxxx\n";
     }
     template<typename T>
     vector<T>::vector(const vector<T>& source)
@@ -70,6 +71,7 @@ namespace Pic10b {
         for (int i = 0; i < the_size; ++i) {
             the_data[i] = source.the_data[i];
         }
+        cout << "xxxxx: This is the regular constructor :xxxxx\n";
     }
     template<typename T>
     vector<T>& vector<T>::operator=(const vector<T>& rhs) {
@@ -87,10 +89,12 @@ namespace Pic10b {
                 the_data[i] = rhs.the_data[i];
         }
         return *this;
+        cout << "xxxxx: This is the copy constructor : xxxxx\n";
     }
     template<typename T>
     vector<T>::~vector() {
         delete[] the_data;
+        cout << "xxxxx: This is the destructor :xxxxx\n";
     }
     /** ********************* Overloaded Operators ********************* **/
     template<typename T>
