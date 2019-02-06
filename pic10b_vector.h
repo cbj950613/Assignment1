@@ -125,7 +125,7 @@ namespace Pic10b {
         return v;
     }
     template<typename T>
-    Pic10b::vector<T> operator*(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
+        T operator*(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
         static_assert(std::is_arithmetic<T>::value, "Numeric required.");
         Pic10b::vector<T> v;
         size_t v_size;
