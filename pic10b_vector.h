@@ -174,13 +174,13 @@ namespace Pic10b {
     Pic10b::vector<T> operator+=(const Pic10b::vector<T>& v1, const Pic10b::vector<T>& v2) {
         return v1 + v2;
     }
-    /*template<typename T>
-    Pic10b::vector<T> sqrt(const Pic10b::vector<T>& vec) {
-        Pic10b::vector<T> v;
-        for (size_t i = 0; i < v.size(); ++i)
-            v.push_back(abs(vec[i]));
-        return v;
-    }*/
+    template<typename T>
+    T sqrt(const Pic10b::vector<T>& vec) {
+        T norm = 0;
+        for (size_t i = 0; i < vec.size(); ++i)
+            norm+=abs(vec[i]*vec[i]);
+        return norm;
+    }
     template<typename T>
     bool operator==(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
         if (vec1.size() != vec2.size()) return false;
@@ -195,29 +195,25 @@ namespace Pic10b {
     template<typename T>
     bool operator<(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
         if (vec1.size() != vec2.size()) return false;
-        for (size_t i = 0; i < vec1.size(); ++i)
-            if (vec1[i] >= vec2[i]) return false;
+        if (sqrt(vec1)>sqrt(vec2)) return false;
         return true;
     }
     template<typename T>
     bool operator<=(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
         if (vec1.size() != vec2.size()) return false;
-        for (size_t i = 0; i < vec1.size(); ++i)
-            if (vec1[i] > vec2[i]) return false;
+        if (sqrt(vec1) > sqrt(vec2)) return false;
         return true;
     }
     template<typename T>
     bool operator>(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
         if (vec1.size() != vec2.size()) return false;
-        for (size_t i = 0; i < vec1.size(); ++i)
-            if (vec1[i] <= vec2[i]) return false;
+            if (sqrt(vec1) <= sqrt(vec2)) return false;
         return true;
     }
     template<typename T>
     bool operator>=(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
         if (vec1.size() != vec2.size()) return false;
-        for (size_t i = 0; i < vec1.size(); ++i)
-            if (vec1[i] < vec2[i]) return false;
+            if (sqrt(vec1) < sqrt(vec2)) return false;
         return true;
     }
     
