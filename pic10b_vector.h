@@ -126,9 +126,6 @@ namespace Pic10b {
     }
     template<typename T>
         T operator*(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
-        static_assert(std::is_arithmetic<T>::value, "Numeric required.");
-        Pic10b::vector<T> v;
-        size_t v_size;
         T norm1 = 0;
         for( int i = 0 ; i < vec1.size();i++){
             norm1 += vec1[i]*vec1[i];
@@ -143,30 +140,7 @@ namespace Pic10b {
         
         return norm1*norm2;
     }
-    // string functions
-    template<>
-    Pic10b::vector<std::string> operator*<std::string>(const Pic10b::vector<std::string>& vec1,
-                                               const Pic10b::vector<std::string>& vec2) {
-        Pic10b::vector<std::string> v;
-        size_t v_size;
-        const Pic10b::vector<std::string> *big_vec;
-        
-        if (vec1.size() < vec2.size()) {
-            v_size = vec1.size();
-            big_vec = &vec2;
-        }
-        else {
-            v_size = vec2.size();
-            big_vec = &vec1;
-        }
-        size_t i = 0;
-        for (; i < v_size; ++i)
-            v.push_back(vec1[i] + vec2[i]);
-        for (; i < big_vec->size(); ++i)
-            v.push_back((*big_vec)[i]);
-        
-        return v;
-    }
+
     template<typename T>
     Pic10b::vector<T> operator+(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
         Pic10b::vector<T> v;
