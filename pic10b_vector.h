@@ -8,7 +8,7 @@
 
 #include <iostream>   // std::ostream, std::cout
 #include <assert.h>
-#include <math.h>
+#include <cmath>
 
 namespace Pic10b {
     template<typename T>
@@ -75,16 +75,13 @@ namespace Pic10b {
     }
     template<typename T>
     vector<T>& vector<T>::operator=(const vector<T>& rhs) {
-        if (this != &rhs) {     // Self-assignment?
-            // Release old memory and request more
+        if (this != &rhs) {
             delete[] the_data;
             the_data = new T[rhs.the_capacity];
             
-            // Shallow copy non-pointers
             the_size = rhs.the_size;
             the_capacity = rhs.the_capacity;
             
-            // Deep copy internal array
             for (int i = 0; i < the_size; ++i)
                 the_data[i] = rhs.the_data[i];
         }
@@ -99,7 +96,6 @@ namespace Pic10b {
     /** ********************* Overloaded Operators ********************* **/
     template<typename T>
     Pic10b::vector<T>  operator*(const T& c, const Pic10b::vector<T>& v) {
-        //static_assert(std::is_arithmetic<T>::value, "Numeric required.");
         Pic10b::vector<T> v1;
         for (size_t i = 0; i < v.size(); ++i)
             v1.push_back(c * v[i]);
@@ -112,7 +108,6 @@ namespace Pic10b {
             v1.push_back(c + v[i]);
         return v;
     }
-    //template<typename T>
     template<typename T>
     Pic10b::vector<T> operator*(const Pic10b::vector<T>& v, const T& c) {
         static_assert(std::is_arithmetic<T>::value, "Numeric required.");
@@ -134,23 +129,19 @@ namespace Pic10b {
         static_assert(std::is_arithmetic<T>::value, "Numeric required.");
         Pic10b::vector<T> v;
         size_t v_size;
-        const Pic10b::vector<T> *big_vec;
-        
-        if (vec1.size() < vec2.size()) {
-            v_size = vec1.size();
-            big_vec = &vec2;
+        T norm1 = 0;
+        for( int i = 0 ; i < vec1.size();i++){
+            norm1 += vec1[i]*vec1[i];
         }
-        else {
-            v_size = vec2.size();
-            big_vec = &vec1;
-        }
-        size_t i = 0;
-        for (; i < v_size; ++i)
-            v.push_back(vec1[i] * vec2[i]);
-        for (; i < big_vec->size(); ++i)
-            v.push_back((*big_vec)[i]);
+        norm1 = sqrt(norm1);
         
-        return v;
+        T norm2 = 0;
+        for(int i = 0; i < vec2.size(); i++){
+            norm2 += vec2[i]*vec2[i];
+        }
+        norm2 = sqrt(norm2);
+        
+        return norm1*norm2;
     }
     // string functions
     template<>
@@ -209,13 +200,13 @@ namespace Pic10b {
     Pic10b::vector<T> operator+=(const Pic10b::vector<T>& v1, const Pic10b::vector<T>& v2) {
         return v1 + v2;
     }
-    template<typename T>
+    /*template<typename T>
     Pic10b::vector<T> sqrt(const Pic10b::vector<T>& vec) {
         Pic10b::vector<T> v;
         for (size_t i = 0; i < v.size(); ++i)
             v.push_back(abs(vec[i]));
         return v;
-    }
+    }*/
     template<typename T>
     bool operator==(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
         if (vec1.size() != vec2.size()) return false;
