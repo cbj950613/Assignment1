@@ -44,6 +44,7 @@ namespace Pic10b {
         void dump_data() const;
         void push_back(T new_value);
         void pop_back();
+        
         // local definition
         vector<T> operator+=(const Pic10b::vector<T>& v1) {
             for(int i = 0; i < the_size; i++){
@@ -53,10 +54,9 @@ namespace Pic10b {
         }
         
     private:
-        //Other members [private]
         void reserve(size_t new_capacity);
         
-    }; // end Pic10b::vector
+    };
     
     
     /** *********************** THE BIG 4 *********************** **/
