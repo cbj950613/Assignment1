@@ -9,6 +9,7 @@
 #include <iostream>   // std::ostream, std::cout
 #include <assert.h>
 #include <cmath>
+#include <typeinfo>
 
 namespace Pic10b {
     template<typename T>
@@ -111,7 +112,7 @@ namespace Pic10b {
     Pic10b::vector<std::string> operator*<std::string>(const std::string& c, const Pic10b::vector<std::string>& v) {
         Pic10b::vector<std::string> v1;
         for (size_t i = 0; i < v.size(); ++i)
-            v1.push_back(c + v[i]);
+            v1.push_back(c + " " + v[i]);
         return v1;
     }
     template<typename T>
@@ -127,7 +128,7 @@ namespace Pic10b {
                                                const std::string& c) {
         Pic10b::vector<std::string> v1;
         for (size_t i = 0; i < v.size(); ++i)
-            v1.push_back(v[i] + c);
+            v1.push_back(v[i] +" " + c);
         return v1;
     }
     template<typename T>
@@ -306,8 +307,28 @@ namespace Pic10b {
 /** ********************** OTHER FUNCTIONS ********************** **/
 template<typename T>
 std::ostream& operator<<(std::ostream& out, const Pic10b::vector<T>& v) {
-    for (size_t i = 0; i < v.size(); ++i)
-        out << v[i] << ' ';
+
+    std::string s;
+    if(typeid(v[1]) == typeid(s)){
+        out << "[ ";
+        for (size_t i = 0; i < v.size(); ++i){
+            if(i!=v.size()-1)
+                out << v[i] << ", ";
+            else
+                out << v[i] << " ";
+        }
+        out << " ]";
+    }
+    else{
+    out << "{ ";
+    for (size_t i = 0; i < v.size(); ++i){
+        if(i != v.size()-1)
+            out << v[i] << ", ";
+        else
+            out << v[i] << " ";
+    }
+    out << " }";
+        }
     return out;
 }
 
