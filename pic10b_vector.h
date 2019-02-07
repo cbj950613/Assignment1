@@ -43,7 +43,13 @@ namespace Pic10b {
         void dump_data() const;
         void push_back(T new_value);
         void pop_back();
-        
+        // local definition
+        vector<T> operator+=(const Pic10b::vector<T>& v1) {
+            for(int i = 0; i < the_size; i++){
+                the_data[i] += v1[i];
+            }
+            return *this;
+        }
         
     private:
         //Other members [private]
@@ -169,10 +175,6 @@ namespace Pic10b {
         for (size_t i = 0; i < v.size(); ++i)
             v1.push_back(v[i] + c);
         return v1;
-    }
-    template<typename T>
-    Pic10b::vector<T> operator+=(const Pic10b::vector<T>& v1, const Pic10b::vector<T>& v2) {
-        return v1 + v2;
     }
     template<typename T>
     T sqrt(const Pic10b::vector<T>& vec) {
