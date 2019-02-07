@@ -116,7 +116,6 @@ namespace Pic10b {
     }
     template<typename T>
     Pic10b::vector<T> operator*(const Pic10b::vector<T>& v, const T& c) {
-        static_assert(std::is_arithmetic<T>::value, "Numeric required.");
         Pic10b::vector<T> v1;
         for (size_t i = 0; i < v.size(); ++i)
             v1.push_back(v[i] * c);
@@ -300,12 +299,10 @@ namespace Pic10b {
     
 }
 
-
-
 /** ********************** OTHER FUNCTIONS ********************** **/
 template<typename T>
 std::ostream& operator<<(std::ostream& out, const Pic10b::vector<T>& v) {
-
+    //if the datatype is string, the << operator will use [] and {} if the data type is a number.
     std::string s;
     if(typeid(v[1]) == typeid(s)){
         out << "[ ";
