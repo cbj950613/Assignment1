@@ -112,7 +112,7 @@ namespace Pic10b {
         Pic10b::vector<std::string> v1;
         for (size_t i = 0; i < v.size(); ++i)
             v1.push_back(c + v[i]);
-        return v;
+        return v1;
     }
     template<typename T>
     Pic10b::vector<T> operator*(const Pic10b::vector<T>& v, const T& c) {
@@ -128,7 +128,7 @@ namespace Pic10b {
         Pic10b::vector<std::string> v1;
         for (size_t i = 0; i < v.size(); ++i)
             v1.push_back(v[i] + c);
-        return v;
+        return v1;
     }
     template<typename T>
         T operator*(const Pic10b::vector<T>& vec1, const Pic10b::vector<T>& vec2) {
